@@ -49,6 +49,5 @@ public class ConsultaProcessoNacionalidadePage {
         if (driver != null) {
             driver.quit();
         }
-
     }
 }
