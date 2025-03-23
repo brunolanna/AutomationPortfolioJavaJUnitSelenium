@@ -19,7 +19,7 @@ public class PortifolioAutomacaoPage {
     //Todos os métodos e códigos criados por Bruno Lanna Faria.
     //Este projeto tem por fundamento a apresentação de script de automação web autoral.
     //Utilizadas classes com estilo DTO(Data Transfer Object), LOGIN, e PAGE.
-    //Para uma próxima versão, será realizado desenvolvido um feature file em linguagem Gherkin.
+    //Para uma próxima versão, será desenvolvido um feature file em linguagem Gherkin.
 
     private static WebDriver driver;
     private JavascriptExecutor js;
