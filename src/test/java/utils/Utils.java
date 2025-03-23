@@ -1,28 +1,40 @@
 package utils;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 public class Utils {
 
-    public static void scroll(WebDriver driver, JavascriptExecutor js, String pageElement){
-        WebElement elemento;
-       if (pageElement.startsWith("//") || pageElement.startsWith("(//")){
-        elemento = new WebDriverWait(driver, Duration.ofSeconds(4)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(pageElement)));
-       } else {
-           elemento = new WebDriverWait(driver, Duration.ofSeconds(4)).until(ExpectedConditions.visibilityOfElementLocated(By.id(pageElement)));
-       }
-       js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", pageElement);
+    public static void takeScreenshot(WebDriver driver, String fileName) {
+        // Tirar o screenshot e armazenar no tipo File
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        File screenshotFile = ts.getScreenshotAs(OutputType.FILE);
+
+        try {
+            // Copiar o arquivo para o diretório de destino
+            FileUtils.copyFile(screenshotFile, new File(fileName));
+            System.out.println("Screenshot salva com sucesso!");
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar o screenshot: " + e.getMessage());
+        }
     }
 
-    public static void wait(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
-        wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+    public static WebElement buscarElemento (WebDriver driver, String elemento) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement element;
+        if (elemento.startsWith("//")) {
+            element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elemento)));
+        } else {
+            element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(elemento)));
+        }
+        return element;
     }
+
+
 }
